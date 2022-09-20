@@ -2,3 +2,5 @@
 /commentService/yarn.lock
 /postService/node_modules
 /postService/yarn.lock
+/eventBroker/yarn.lock
+/eventBroker/node_modules

@@ -33,8 +33,7 @@ export default {
   },
   computed:{
     postList(){
-      console.log(Object.values(this.posts))
-      return Object.values(this.posts).map(value=>value)
+      return Object.keys(this.posts).map(value=>({...this.posts[value], id: value}))
     }
   },
   async mounted () {

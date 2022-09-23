@@ -2,14 +2,16 @@
   <div>
     Posts:
     <div v-for="(post) in posts" v-bind:key="post.text">
-       <h2>-{{post.text}}</h2>
+       <PostItem :post="post"/>
     </div>
   </div>
 </template>
 
 <script>
+import PostItem from "@/components/PostItem";
 export default {
   name: 'PostsList',
+  components: {PostItem},
   props: ['posts'],
 }
 </script>

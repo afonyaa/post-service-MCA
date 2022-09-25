@@ -39,7 +39,6 @@ app.get('/posts', (req, res) => {
 })
 
 app.post('/events', (req, res) => {
-    console.log(req.body)
     res.status(200).send('ok')
 })
 

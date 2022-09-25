@@ -18,12 +18,20 @@ app.get('/posts', ((req, res) => {
 
 app.post('/events', ((req, res) => {
     const event = req.body.event
-    console.log(req.body)
+    console.log(event)
     if (event.type === 'POST_CREATED') {
         Store.addPost(event.payload)
     }
     if (event.type === 'COMMENT_CREATED') {
         Store.addCommentToPost(event.payload)
+    }
+    if(event.type === 'COMMENT_UPDATED'){
+        const commentData = event.payload
+        const posts = Store.getPosts()
+        const post = posts[commentData.postId]
+        //todo сделать нормальную логику обновления комментария
+        const commentToUpdate = post.comments.find(comment => comment.id === commentData.id)
+        commentToUpdate.status = commentData.status
     }
     res.status(200).send('ok')}
 ))

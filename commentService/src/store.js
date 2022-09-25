@@ -19,6 +19,15 @@ class CommentsStore {
             : this.commentsByPostId[postId] = [newCommentData]
         return newCommentData
     }
+    updateComment(postId, commentId, newCommentData) {
+        const comments = this.getCommentsByPostId(postId)
+        const comment = comments.find(comment => comment.id === commentId)
+        for (const [key, value] of Object.entries(newCommentData)){
+            comment[key] = value
+        }
+        return comment
+    }
+
 }
 
 module.exports = {CommentsStore}

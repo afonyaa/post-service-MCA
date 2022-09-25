@@ -20,12 +20,17 @@ app.get('/', ((req, res) => {
     res.status(200).send('Hello')
 }))
 
-app.post('/events', (req, res)=> {
+app.post('/events', (req, res) => {
     const event = req.body
-
-    listeningServicesAPIs.forEach(serviceAPI=>{
-        axios.post(serviceAPI, event)
-    })
+    try {
+        listeningServicesAPIs.forEach(serviceAPI => {
+            axios.post(serviceAPI, event).catch((e)=>{
+                console.warn('Error while sending events')
+            })
+        })
+    } catch (e) {
+        console.warn('Error while sending events')
+    }
 
     res.status(200).send('Ok')
 })

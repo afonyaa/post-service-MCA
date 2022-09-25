@@ -33,13 +33,19 @@ app.get('/post/:id/comments', (req, res) => {
         const postId = req.params.id
         res.status(200).json(Store.getCommentsByPostId(postId))
     } catch (e) {
-        res.status(500).send({error: e})
+        res.send(e)
     }
 })
 
 
 app.post('/events', (req, res) => {
-    console.log(req.body)
+    const event = req.body.event
+    if (event.type === 'COMMENT_MODERATED'){
+        const moderatedComment = event.payload
+        const updatedComment = Store.updateComment(moderatedComment.postId, moderatedComment.id, moderatedComment)
+        axios.post(EVENT_BROKER_API, {event: {type: 'COMMENT_UPDATED', payload: updatedComment}})
+    }
+
     res.status(200).send('ok')
 })
 

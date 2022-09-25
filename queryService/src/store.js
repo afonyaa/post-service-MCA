@@ -16,7 +16,8 @@ class QueryDataStore {
         const postData = this.posts[postId]
         postData.comments.push({
             id: newComment.id,
-            content: newComment.content
+            content: newComment.content,
+            status: newComment.status,
         })
     }
 }

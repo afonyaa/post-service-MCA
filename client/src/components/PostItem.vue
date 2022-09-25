@@ -5,7 +5,7 @@
   <div>
     comments:
     <ul>
-      <li v-for="comment of post.comments" :key="comment.id"> {{comment.content}} </li>
+      <li v-for="comment of post.comments" :key="comment.id"> {{comment.content}} ({{comment.status}}) </li>
     </ul>
     <input v-model="commentText"/>
     <button @click="addComment">add comment</button>

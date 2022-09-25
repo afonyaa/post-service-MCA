@@ -10,12 +10,14 @@ class CommentsStore {
     }
 
     addComment(newCommentData, postId) {
-        const commentId = uuid.v4()
+        newCommentData.id =  uuid.v4()
+        newCommentData.postId =  postId
+        newCommentData.status = 'pending'
         let comments = this.commentsByPostId[postId]
         comments
-            ? comments.push({commentId, ...newCommentData})
-            : this.commentsByPostId[postId] = [{commentId, ...newCommentData}]
-        return {commentId, ...newCommentData}
+            ? comments.push(newCommentData)
+            : this.commentsByPostId[postId] = [newCommentData]
+        return newCommentData
     }
 }
 

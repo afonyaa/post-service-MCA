@@ -20,11 +20,9 @@ app.post('/post/:id/newComment', async (req, res) => {
         const newCommentData = req.body
         const postId = req.params.id
         const newComment = Store.addComment(newCommentData, postId)
-        await axios.post(EVENT_BROKER_API, {event: {type: 'COMMENT_CREATED', payload: {
-                    id: newComment.commentId,
-                    content: newComment.text,
-                    postId: postId
-                }}})
+        console.log('new comment')
+        console.log(newComment)
+        await axios.post(EVENT_BROKER_API, {event: {type: 'COMMENT_CREATED', payload: newComment}})
         res.status(200).json(Store.getCommentsByPostId(postId))
     } catch (e) {
         res.status.send({error: e})

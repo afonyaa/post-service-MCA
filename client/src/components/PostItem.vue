@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     async addComment(){
-      await createComment(this.post.id, {text: this.commentText})
+      await createComment(this.post.id, {content: this.commentText})
       this.$emit('createComment')
     }
   },

@@ -11,12 +11,14 @@ app.use(express.json())
 
 const Store = new QueryDataStore()
 
+// todo - !!! вызывается рано, сразу после клика создания поста, до того как сервис получит евент о том что пост создался !!!
 app.get('/posts', ((req, res) => {
     res.status(200).json(Store.getPosts())
 }))
 
 app.post('/events', ((req, res) => {
     const event = req.body.event
+    console.log(req.body)
     if (event.type === 'POST_CREATED') {
         Store.addPost(event.payload)
     }

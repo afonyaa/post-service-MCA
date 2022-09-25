@@ -15,15 +15,14 @@ app.use(cors())
 
 const Store = new PostsStore()
 
-app.post('/post', (req, res) => {
+app.post('/post', async (req, res) => {
     try {
         const postData = req.body
-        Store.addPost(postData)
-        axios.post(EVENT_BROKER_API, {event: 'event from post service'}).then(()=>{
-            res.status(200).json({
-                posts: Store.getPosts()
-            })
-        }).catch(()=> console.log('ERROR FROM EVENT SERVICE'))
+        const addedPost = Store.addPost(postData)
+        await axios.post(EVENT_BROKER_API, {event: {type: 'POST_CREATED', payload: addedPost}})
+        res.status(200).json({
+            posts: Store.getPosts()
+        })
     } catch (e) {
         res.status(500)
         res.send({error: e})
@@ -40,6 +39,7 @@ app.get('/posts', (req, res) => {
 })
 
 app.post('/events', (req, res) => {
+    console.log(req.body)
     res.status(200).send('ok')
 })
 

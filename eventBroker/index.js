@@ -9,6 +9,8 @@ const HOST = 'localhost'
 const listeningServicesAPIs = [
     'http://localhost:8080/events',
     'http://localhost:8081/events',
+    'http://localhost:8082/events',
+    'http://localhost:8084/events',
 ]
 
 app.use(express.json())

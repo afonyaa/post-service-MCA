@@ -7,7 +7,7 @@
         Create post
       </button>
     </div>
-    <PostsList :posts="postList" />
+    <PostsList :posts="postList" @createComment="createComment"/>
   </div>
 </template>
 
@@ -28,7 +28,11 @@ export default {
   },
   methods: {
     async createPost(){
-      this.posts = await createPost(this.postText)
+      await createPost(this.postText)
+      this.posts =  await getPosts()
+    },
+    async createComment(){
+      this.posts = await getPosts()
     }
   },
   computed:{

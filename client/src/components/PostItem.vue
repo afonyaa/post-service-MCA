@@ -5,7 +5,7 @@
   <div>
     comments:
     <ul>
-      <li v-for="comment of comments" :key="comment.id"> {{comment.text}} </li>
+      <li v-for="comment of post.comments" :key="comment.id"> {{comment.content}} </li>
     </ul>
     <input v-model="commentText"/>
     <button @click="addComment">add comment</button>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {createComment, getCommentsByPostId} from "@/api/api";
+import {createComment} from "@/api/api";
 
 export default {
   name: 'PostItem',
@@ -31,13 +31,10 @@ export default {
   },
   methods: {
     async addComment(){
-      this.comments = await createComment(this.post.id, {text: this.commentText})
-      this.commentText = ''
+      await createComment(this.post.id, {text: this.commentText})
+      this.$emit('createComment')
     }
   },
-  async mounted() {
-    this.comments = await getCommentsByPostId(this.post.id)
-  }
 }
 </script>
 

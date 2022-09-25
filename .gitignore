@@ -4,3 +4,7 @@
 /postService/yarn.lock
 /eventBroker/yarn.lock
 /eventBroker/node_modules
+/queryService/node_modules
+/queryService/yarn.lock
+/moderationService/node_modules
+/moderationService/yarn.lock

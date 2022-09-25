@@ -4,12 +4,15 @@ class PostsStore {
     constructor() {
         this.posts = {}
     }
-    getPosts(){
+
+    getPosts() {
         return this.posts
     }
-    addPost(postData){
+
+    addPost(postData) {
         const postId = uuid.v4()
         this.posts[postId] = postData
+        return {id: postId,...this.posts[postId]}
     }
 }
 

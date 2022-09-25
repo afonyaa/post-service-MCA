@@ -2,7 +2,7 @@
   <div>
     Posts:
     <div v-for="(post) in posts" v-bind:key="post.text">
-       <PostItem :post="post"/>
+       <PostItem @createComment="$emit('createComment')" :post="post"/>
     </div>
   </div>
 </template>

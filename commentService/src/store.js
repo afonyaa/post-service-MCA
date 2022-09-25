@@ -15,7 +15,7 @@ class CommentsStore {
         comments
             ? comments.push({commentId, ...newCommentData})
             : this.commentsByPostId[postId] = [{commentId, ...newCommentData}]
-        console.log(comments)
+        return {commentId, ...newCommentData}
     }
 }
 

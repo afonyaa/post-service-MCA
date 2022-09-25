@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const {CommentsStore} = require('./store');
+const axios = require("axios");
 
 const PORT = 8081
 const HOST = 'localhost'
@@ -14,11 +15,16 @@ app.use(cors())
 const Store = new CommentsStore()
 
 /** Добавление комментария для поста */
-app.post('/post/:id/newComment', (req, res) => {
+app.post('/post/:id/newComment', async (req, res) => {
     try {
         const newCommentData = req.body
         const postId = req.params.id
-        Store.addComment(newCommentData, postId)
+        const newComment = Store.addComment(newCommentData, postId)
+        await axios.post(EVENT_BROKER_API, {event: {type: 'COMMENT_CREATED', payload: {
+                    id: newComment.commentId,
+                    content: newComment.text,
+                    postId: postId
+                }}})
         res.status(200).json(Store.getCommentsByPostId(postId))
     } catch (e) {
         res.status.send({error: e})
@@ -37,6 +43,7 @@ app.get('/post/:id/comments', (req, res) => {
 
 
 app.post('/events', (req, res) => {
+    console.log(req.body)
     res.status(200).send('ok')
 })
 
